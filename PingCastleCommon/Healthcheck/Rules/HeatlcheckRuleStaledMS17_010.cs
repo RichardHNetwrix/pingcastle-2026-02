@@ -2,6 +2,7 @@
 {
     using PingCastle.Rules;
     using PingCastle.Scanners;
+    using System.Diagnostics;
 
     [RuleModel("S-Vuln-MS17_010", RiskRuleCategory.StaleObjects, RiskModelCategory.VulnerabilityManagement)]
     [RuleComputation(RuleComputationType.TriggerOnPresence, 100)]
@@ -30,6 +31,7 @@
             {
                 if (domainController.AzureADKerberos)
                 {
+                    Trace.WriteLine("S-Vuln-MS17-010: Skipping Azure AD Kerberos.");
                     continue;
                 }
 
