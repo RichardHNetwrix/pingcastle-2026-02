@@ -1,9 +1,7 @@
 ﻿namespace PingCastle.Healthcheck.Rules
 {
-    using PingCastle.ADWS;
     using PingCastle.Rules;
     using PingCastle.Scanners;
-    using PingCastleCommon.Utility;
 
     [RuleModel("S-Vuln-MS17_010", RiskRuleCategory.StaleObjects, RiskModelCategory.VulnerabilityManagement)]
     [RuleComputation(RuleComputationType.TriggerOnPresence, 100)]
@@ -30,6 +28,11 @@
 
             foreach (var domainController in healthcheckData.DomainControllers)
             {
+                if (domainController.AzureADKerberos)
+                {
+                    continue;
+                }
+
                 var scanResult = Scanner.Scan(
                     domainController.DCName,
                     domainController.OperatingSystem,
